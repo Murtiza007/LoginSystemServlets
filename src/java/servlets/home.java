@@ -17,6 +17,11 @@ String message="";
     
     public void getHtml(HttpServletRequest req ,HttpServletResponse res) throws IOException{
     PrintWriter writer=res.getWriter();
+    
+    if(req.getParameter("ID")!=null){
+    this.message=AccountsConroller.getMessage(req.getParameter("ID"));
+    }
+    
     essentials en=new essentials();
         res.setContentType("text/html");
         writer.print(
@@ -55,8 +60,12 @@ String message="";
     
     @Override
     public void doGet(HttpServletRequest req ,HttpServletResponse res) throws IOException{
-    this.getHtml(req, res);
-    this.message="";
+       AccountsConroller ac=new AccountsConroller();
+       users user=new users();
+       this.message="";
+        this.getHtml(req, res);
+ 
+    
     }
     @Override
      public void doPost(HttpServletRequest req ,HttpServletResponse res) throws IOException{
@@ -75,7 +84,7 @@ String message="";
        
         ac.login(user);
         this.message=user.getMessage();
-        
+      
         
         this.getHtml(req, res);
     }

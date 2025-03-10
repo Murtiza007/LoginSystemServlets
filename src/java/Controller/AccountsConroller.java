@@ -52,10 +52,24 @@ public class AccountsConroller {
     HttpSession session=user.getReq().getSession();
         if(session.getAttribute("AuthorizationSession")==null
                 || session.getAttribute("AuthorizationSession").equals("")){
-            user.getRes().sendRedirect("home?ID=101");
+        user.getRes().sendRedirect("home?ID=101");
         
         }
     
+    }
+    
+    public static String getMessage(String parameter){
+        String returnValue="";
+       
+        if (parameter.equals("101")){
+        returnValue=" you are not authorized ";
+        }
+        else if (parameter.equals("102")){
+         returnValue=" Logged out Sucessfully ";
+        }
+        
+      
+        return returnValue;
     }
     
     
