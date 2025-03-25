@@ -48,6 +48,10 @@ String message="";
                                    "<td></td>"+
                                 "<td><input type=submit value='LOGIN' name='txtUsername'/></td>"+
                             "</tr>"+
+                              "<tr>"+
+                                   "<td>Remember Me</td>"+
+                                "<td><input type=checkbox  name='remember_me'/></td>"+
+                            "</tr>"+
                 
                         "</table>"+
                     "</form>"+
@@ -74,9 +78,11 @@ String message="";
         res.setContentType("text/html");
         
         users user=new users();
-        
+        user.setRememberme(req.getParameter("remember_me"));
         user.setUsername(req.getParameter("txtUsername"));
         user.setPassword(req.getParameter("txtPassword"));
+
+        
         
        AccountsConroller ac=new AccountsConroller();
        user.setReq(req);
@@ -85,7 +91,7 @@ String message="";
         ac.login(user);
         this.message=user.getMessage();
       
-        
+       
         this.getHtml(req, res);
     }
     

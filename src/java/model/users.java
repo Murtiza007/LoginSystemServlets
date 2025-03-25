@@ -5,6 +5,7 @@ public class users extends servletEssentials {
     
     private String Username;
     private String Password;
+    private String rememberme;
 
     public String getMessage() {
         return message;
@@ -32,5 +33,11 @@ public class users extends servletEssentials {
     }
     
    
-    
+     public String getRememberme() {
+        return rememberme;
+    }
+
+    public void setRememberme(String remember) {
+        this.rememberme = remember;
+    }
 }
