@@ -8,6 +8,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.dbContext;
+
 import model.users;
 
 
@@ -15,12 +20,15 @@ public class home extends HttpServlet{
    
 String message="";    
     
-    public void getHtml(HttpServletRequest req ,HttpServletResponse res) throws IOException{
+    public void getHtml(HttpServletRequest req ,HttpServletResponse res) throws IOException, SQLException{
     PrintWriter writer=res.getWriter();
     
     if(req.getParameter("ID")!=null){
     this.message=AccountsConroller.getMessage(req.getParameter("ID"));
     }
+    
+    dbContext db=new dbContext();
+    dbContext.Connect();
     
     essentials en=new essentials();
         res.setContentType("text/html");
@@ -56,6 +64,7 @@ String message="";
                         "</table>"+
                     "</form>"+
                       "<a href='register'>No Account ||  SignUp</a>"+
+                           dbContext.messgae+
                         en.getFooter()
                );
     }
@@ -64,35 +73,56 @@ String message="";
     
     @Override
     public void doGet(HttpServletRequest req ,HttpServletResponse res) throws IOException{
-       AccountsConroller ac=new AccountsConroller();
-       users user=new users();
-       this.message="";
+    
+    
+    
+    try {  
+        AccountsConroller ac=new AccountsConroller();
+        users user=new users();
+        this.message="";
         this.getHtml(req, res);
+          
+        
+    } catch (SQLException ex) {
+        PrintWriter writer=res.getWriter();
+        res.setContentType("text/html");
+        writer.print("coming from catch");
+        
+    }
+    
+   
+        
+        
+        
+    
  
     
     }
     @Override
      public void doPost(HttpServletRequest req ,HttpServletResponse res) throws IOException{
    
-    PrintWriter writer=res.getWriter();
+    try {
+        
+        PrintWriter writer=res.getWriter();
         res.setContentType("text/html");
         
         users user=new users();
         user.setRememberme(req.getParameter("remember_me"));
         user.setUsername(req.getParameter("txtUsername"));
         user.setPassword(req.getParameter("txtPassword"));
-
         
         
-       AccountsConroller ac=new AccountsConroller();
-       user.setReq(req);
-       user.setRes(res);
-       
+        
+        AccountsConroller ac=new AccountsConroller();
+        user.setReq(req);
+        user.setRes(res);
+        
         ac.login(user);
         this.message=user.getMessage();
-      
-       
+        
+        
         this.getHtml(req, res);
-    }
+    } catch (SQLException ex) {
+   }
     
-}
+}}

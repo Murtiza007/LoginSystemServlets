@@ -5,11 +5,27 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import model.users;
-
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.dbContext;
 
 public class AccountsConroller {
     
-   
+    private Connection con;
+    private Statement stat;
+    private ResultSet rs;
+    private PreparedStatement pstat;
+    
+    public  AccountsConroller() throws SQLException{
+        this.con=dbContext.Connect();
+    }
+    
+    
     
     public void login(users user) throws IOException{
      
@@ -20,9 +36,7 @@ public class AccountsConroller {
                authorize(user);
                user.setMessage("welcome");
            }
-           else{
-               user.setMessage("Incorrect Credentials");
-           }
+           
         }
         else{
             user.setMessage("Please enter all fields");
@@ -40,9 +54,29 @@ public class AccountsConroller {
     
     }
     public boolean isAuthentic(users user){
-        return (user.getUsername().equals("moin")&&
-                user.getPassword().equals("123"));
-    
+        
+        try {
+            String sql="select * from users where username = '"+user.getUsername()+"' and password='"+user.getPassword()+"'";
+            stat=con.createStatement();
+            rs=stat.executeQuery(sql);
+           
+            if(rs.next()){
+                user.setMessage("tgy");
+                return true;
+            }
+            else{
+                user.setMessage(" incorrect");
+                return false;
+            }
+        } catch (SQLException ex) {
+           user.setMessage(ex.getMessage());
+           return false;
+        }
+        
+        
+        
+        
+        
     }
     public void authorize(users user) throws IOException{
       
