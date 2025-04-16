@@ -64,7 +64,7 @@ String message="";
                         "</table>"+
                     "</form>"+
                       "<a href='register'>No Account ||  SignUp</a>"+
-                           dbContext.messgae+
+                           dbContext.message+
                         en.getFooter()
                );
     }

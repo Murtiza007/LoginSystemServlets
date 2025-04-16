@@ -9,6 +9,7 @@ public class essentials {
                 +"<title>"
                 +"</title>"
             + "</head>"
+            +"<link rel='stylesheet' href='css/style.css'/>"
             + "<body>";
         
     }

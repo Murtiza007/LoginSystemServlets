@@ -2,4 +2,9 @@ body{
     background-color: #ddd;
     font-family: sans-serif;
 }
-
+textarea{
+   width: 40%;
+   height:300px;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
