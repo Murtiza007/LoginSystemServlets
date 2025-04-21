@@ -5,6 +5,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.Timestamp;
 import model.users;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -76,6 +77,7 @@ public class AccountsConroller {
        user.setMessage(ex.getMessage());
        return false;
        }
+     
         
         
         
@@ -147,7 +149,7 @@ public class AccountsConroller {
     
      public String getLoggedUser(users user){
      
-        HttpSession session=user.req.getSession();
+     HttpSession session=user.req.getSession();
      Cookie[] cookie=user.getReq().getCookies();
          
         if(user.getReq().getSession().getAttribute("AuthorizationSession")!=null){
@@ -248,16 +250,64 @@ public class AccountsConroller {
         }
 
     }
-    public void SaveBlog(blog_model bm) throws IOException{
-    
-      String sql = "INSERT INTO blogs (username, blog,) VALUES ('" 
-           + bm.getBlog_username() + "', '" 
-         
-           + bm.getBlog_text()+ "')";
+    public boolean SaveBlog(blog_model bm) throws IOException{
+        users user =new users();
+    try{
+      String sql = "INSERT INTO blogs (username, blog) VALUES ('" 
+      + bm.getBlog_username() + "', '" 
+      + bm.getBlog_text()+ "')";
       
+   
+      
+     pstat= con.prepareStatement(sql);
+        
+             int rows = pstat.executeUpdate();
+             if (rows > 0) {
+            
+          
+             return true;
+            } else {
+                user.setMessage("Posted Error");
+               
+                
+                return false;
+                 
+            }
+        }
+        catch (SQLException ex) {
        
+           return false;
+        }
  
          
     }
+    public String getAllPosts(users user) throws SQLException{
+        blog_model bm=new blog_model();
+     StringBuilder  content=new StringBuilder();
+     String post_content="";
+     String post_user;
+        try {
+       String sql="select * from blogs";
+       stat=con.createStatement();
+       rs=stat.executeQuery(sql);
+         
+       
+      
+       
+       
+       
+          while (rs.next()) {
+             post_content =rs.getString("blog");
+             post_user=rs.getString("username");
+                content.append("<h4>Author : "+post_user+"</h4>");
+                content.append(post_content+"<br>");
+           }
+        } catch (SQLException ex) {
+            post_content="fail";
+        }
+        return content.toString();
+    }
+    
+    
     
 }

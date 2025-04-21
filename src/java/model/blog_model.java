@@ -7,6 +7,15 @@ public class blog_model extends servletEssentials {
     private String blog_text;
     private String blog_username;
     private String blog_time;
+    private String blog_log;
+
+    public String getBlog_log() {
+        return blog_log;
+    }
+
+    public void setBlog_log(String blog_log) {
+        this.blog_log = blog_log;
+    }
 
     public String getBlog_username() {
         return blog_username;

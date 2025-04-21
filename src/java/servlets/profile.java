@@ -13,6 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.blog_model;
 import model.users;
 
@@ -23,6 +26,7 @@ import model.users;
 public class profile extends HttpServlet {
     String logged_user;
     String blog="";
+    String message="";
     
     
     public void getBlogpage(HttpServletRequest req ,HttpServletResponse res) throws IOException{
@@ -33,22 +37,30 @@ public class profile extends HttpServlet {
      essentials es=new essentials();
      AccountsConroller ac=new AccountsConroller();
      users user=new users();
+     blog_model bm=new blog_model();
      user.setReq(req);
      user.setRes(res);
         
-        writer.print(
-                
-                es.getHeader()+
-                
-                "welcome " +ac.getLoggedUser(user)+" to profile"+
-                         "<button> <a href='logout'>Logout</a></button>"+
-                  "<form action='' method='POST'>"+      
-                "<h1>Post your Blog</h1>"+ 
-                 "<textarea name='blogtxt'></textarea>"+ "<br>"+      
-                    " <input type=submit value='POST' name='txtblog'/>"+
-                  "</form>"+this.blog+
-        es.getFooter()
-        );
+        try {
+            writer.print(
+                    
+                    es.getHeader()+
+                            
+                            "welcome " +ac.getLoggedUser(user)+" to profile"+"<br>"+
+                                    "<button> <a href='logout'>Logout</a></button>"+
+                                    
+                                    "<form action='' method='POST'>"+
+                                    "<h1>Post your Blog</h1>"+
+                                    "<textarea name='blogtxt'></textarea>"+ "<br>"+
+                                    " <input type=submit value='POST' name='txtblog'/>"+
+                                    "</form>"
+                            +this.message+
+                            ac.getAllPosts(user)+
+                            es.getFooter()
+            );
+        } catch (SQLException ex) {
+            Logger.getLogger(profile.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
@@ -56,7 +68,8 @@ public class profile extends HttpServlet {
     
     @Override
     public void doGet(HttpServletRequest req ,HttpServletResponse res) throws IOException{
-           this.blog="";
+          this.blog="";
+          this.message="";
           this.getBlogpage(req, res);
     }
     
@@ -76,18 +89,19 @@ public class profile extends HttpServlet {
       bm.setBlog_text(req.getParameter("blogtxt")); 
       bm.setBlog_username(ac.getLoggedUser(user));
        
-       this.blog=bm.getBlog_text();
+      this.blog=bm.getBlog_text();
        
       
        
-        bm.setReq(req);
-        bm.setRes(res);
+      bm.setReq(req);
+      bm.setRes(res);
        
-       ac.SaveBlog(bm);
-         
+      ac.SaveBlog(bm);
+     
+      this.message="Post Successfull";
+      this.getBlogpage(req, res);
+        
 
-       this.getBlogpage(req, res);
-         
      
      }
 }
