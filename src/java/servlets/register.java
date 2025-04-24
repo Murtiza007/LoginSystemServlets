@@ -20,42 +20,57 @@ public class register extends HttpServlet {
         res.setContentType("text/html");
         writer.print(
                 es.getHeader()+
-                "<form action='' method='POST'>"+
-                        "<table cellpadding=5 cellspacing=5>"+
+        "<p class='h2 text-center mt-4 text-Primary fw-bold' >WordNest</p>"       
+                        
+        +"<div class='container mt-4 mb-3'>"
+        + "<div class='row justify-content-center'>"
+        + "<div class='col-md-6'>"
+        + "<div class='card shadow-sm'>"
+        + "<div class='card-header  text-white text-center bg-primary'><h5 class='mb-0'>Sign up</h5></div>"
+        + "<div class='card-body'>"
+        + "<form method='POST'>"
+
+        // Error message
+        + "<div class='mb-3 text-danger'>" + this.message + "</div>"
+
+        // Username
+        + "<div class='mb-3'>"
+        + "<label for='txtUsername' class='form-label'>Create Username</label>"
+        + "<input type='text' class='form-control' name='txtUsername' id='txtUsername' required>"
+        + "</div>"
+
+        // email
+        + "<div class='mb-3'>"
+        + "<label for='txtPassword' class='form-label'>Enter Email</label>"
+        + "<input type='email' class='form-control' name='txtEmail' id='txtEmail' required>"
+        + "</div>"
                 
-                            "<tr>"+
-                                "<td>SignUp Panel</td>"+
-                                "<td style='color:red'>"+this.message+"</td>"+
-                            "</tr>"+
+          + "<div class='mb-3'>"
+        + "<label for='txtUsername' class='form-label'>Enter Phone</label>"
+        + "<input type='phone' class='form-control' name='txtNumber' id='txtNumber' required>"
+        + "</div>"
+
+        // phone
+        + "<div class='mb-3'>"
+        + "<label for='txtPassword' class='form-label'>Create Password</label>"
+        + "<input type='password' class='form-control' name='txtPassword' id='txtPassword' required>"
+        + "</div>"       
+
+        
+
+        // Submit button
+        + "<button type='submit' class='btn btn-primary w-100'>Signup</button>"
+
+        + "</form>"
+        + "<div class='mt-3 text-center'>"
+        + "<a href='home'>Already have an account | Login</a><br>"+
                 
-                            "<tr>"+
-                                "<td>Create Username</td>"+
-                                "<td><input type=text name='txtUsername'/></td>"+
-                            "</tr>"+
-                
-                            "<tr>"+
-                                "<td>CreatePassword</td>"+
-                                "<td><input type=text name='txtPassword'/></td>"+
-                            "</tr>"+
-                            "<tr>"+
-                                "<td>Enter Email</td>"+
-                                "<td><input type=text name='txtEmail'/></td>"+
-                            "</tr>"+
-                            "<tr>"+
-                                "<td>Enter Phone Number</td>"+
-                                "<td><input type=text name='txtNumber'/></td>"+
-                            "</tr>"+
-                
-                             "<tr>"+
-                                   "<td></td>"+
-                                "<td><input type=submit value='SIGNUP' name='txtUsername'/></td>"+
-                            "</tr>"+
-                              "<tr>"+
-                                   "<td><a href='home'>Already have an account || Login </a></td>"+
-                             "</tr>"+
-                            
-                        "</table>"+
-                    "</form>"+
+        "</div>"
+        + "</div>" // card-body
+        + "</div>" // card
+        + "</div>" // col
+        + "</div>" // row
+        + "</div>"+
                 es.getFooter());
         
     }
