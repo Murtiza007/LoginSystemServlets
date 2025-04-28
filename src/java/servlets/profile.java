@@ -45,16 +45,23 @@ public class profile extends HttpServlet {
             writer.print(
                     
                     es.getHeader()+
-                            
-                            "welcome " +ac.getLoggedUser(user)+" to profile"+"<br>"+
-                                    "<button> <a href='logout'>Logout</a></button>"+
+                           
+                            es.getNavigation()+
+                            "<p class='text-end text-secondary me-3 ' >Welcome " +ac.getLoggedUser(user)+"</p>"+
+                           
                                     
+                                    "<div class=container>"+
                                     "<form action='' method='POST'>"+
                                     "<h1>Post your Blog</h1>"+
-                                    "<textarea name='blogtxt'></textarea>"+ "<br>"+
-                                    " <input type=submit value='POST' name='txtblog'/>"+
-                                    "</form>"
-                            +this.message+
+                                    "<div class='form-floating'>"+
+                                     "<textarea class='form-control  border-dark border-2' placeholder='Tell about your day as a tech!' name='blogtxt' style='height: 200px ;width:40%; ;'></textarea>"+
+                                       "<label for='blogtxt'>Tell us whats on your mind !!</label>"+
+                                    "</div>"+
+                                    " <input type=submit value='POST' name='txtblog' class='btn btn-primary mt-3 '/>"+
+                                    "</form>"+
+                                    "<p>"+this.message+"</p><br>"+
+                                     "</div>"
+                            +
                             ac.getAllPosts(user)+
                             es.getFooter()
             );

@@ -282,25 +282,35 @@ public class AccountsConroller {
          
     }
     public String getAllPosts(users user) throws SQLException{
-        blog_model bm=new blog_model();
-     StringBuilder  content=new StringBuilder();
+     blog_model bm=new blog_model();
+     
+     StringBuilder content=new StringBuilder();
+     
+     
      String post_content="";
      String post_user;
+     String post_timeDate;
         try {
-       String sql="select * from blogs";
+       String sql="SELECT * FROM blogs ORDER BY blog_id DESC ";
+      //String sql = "SELECT * FROM blogs WHERE username = '" + getLoggedUser(user) + "' ORDER BY blog_id DESC";
+
        stat=con.createStatement();
        rs=stat.executeQuery(sql);
          
-       
-      
-       
-       
-       
+     
           while (rs.next()) {
              post_content =rs.getString("blog");
              post_user=rs.getString("username");
-                content.append("<h4>Author : "+post_user+"</h4>");
-                content.append(post_content+"<br>");
+             post_timeDate=rs.getString("timestamp");
+             
+                content.append("<div class='card mb-4 shadow-sm p-3 w-75 mx-auto'>");
+                content.append("<div class='card-body'>");
+                content.append("<h4 class='card-title text-primary'> " + post_user + "</h4>");
+                content.append("<p class='card-subtitle mb-2 text-muted'>" + post_timeDate + "</p>");
+                content.append("<p class='card-text'>" + post_content + "</p>");
+                content.append("</div>");
+                content.append("</div>");
+    
            }
         } catch (SQLException ex) {
             post_content="fail";

@@ -33,38 +33,51 @@ String message="";
     essentials en=new essentials();
         res.setContentType("text/html");
         writer.print(
-                    en.getHeader()+
-                    "<form action='' method='POST'>"+
-                        "<table cellpadding=5 cellspacing=5>"+
-                
-                            "<tr>"+
-                                "<td>Login Panel</td>"+
-                                "<td style='color:red'>"+this.message+"</td>"+
-                            "</tr>"+
-                
-                            "<tr>"+
-                                "<td>Enter Username</td>"+
-                                "<td><input type=text name='txtUsername'/></td>"+
-                            "</tr>"+
-                
-                            "<tr>"+
-                                "<td>Enter Password</td>"+
-                                "<td><input type=text name='txtPassword'/></td>"+
-                            "</tr>"+
-                
-                             "<tr>"+
-                                   "<td></td>"+
-                                "<td><input type=submit value='LOGIN' name='txtUsername'/></td>"+
-                            "</tr>"+
-                              "<tr>"+
-                                   "<td>Remember Me</td>"+
-                                "<td><input type=checkbox  name='remember_me'/></td>"+
-                            "</tr>"+
-                
-                        "</table>"+
-                    "</form>"+
-                      "<a href='register'>No Account ||  SignUp</a>"+
-                           dbContext.message+
+                    en.getHeader()
+        +"<p class='h2 text-center mt-5 text-Primary fw-bold' >WordNest</p>"
+        +"<div class='container mt-5'>"
+        + "<div class='row justify-content-center'>"
+        + "<div class='col-md-4'>"
+        + "<div class='card shadow-sm'>"
+        + "<div class='card-header  text-black text-center'><h5 class='mb-0'>Login Panel</h5></div>"
+        + "<div class='card-body'>"
+        + "<form method='POST'>"
+
+        // Error message
+        + "<div class='mb-3 text-danger'>" + this.message + "</div>"
+
+        // Username
+        + "<div class='mb-3'>"
+        + "<label for='txtUsername' class='form-label'>Enter Username</label>"
+        + "<input type='text' class='form-control' name='txtUsername' id='txtUsername' required>"
+        + "</div>"
+
+        // Password
+        + "<div class='mb-3'>"
+        + "<label for='txtPassword' class='form-label'>Enter Password</label>"
+        + "<input type='password' class='form-control' name='txtPassword' id='txtPassword' required>"
+        + "</div>"
+
+        // Remember me
+        + "<div class='form-check mb-3'>"
+        + "<input class='form-check-input' type='checkbox' name='remember_me' id='remember_me'>"
+        + "<label class='form-check-label' for='remember_me'>Remember Me</label>"
+        + "</div>"
+
+        // Submit button
+        + "<button type='submit' class='btn btn-primary w-100'>LOGIN</button>"
+
+        + "</form>"
+        + "<div class='mt-3 text-center'>"
+        + "<a href='register'>No Account? Sign Up</a><br>"+
+                dbContext.message+
+        "</div>"
+        + "</div>" // card-body
+        + "</div>" // card
+        + "</div>" // col
+        + "</div>" // row
+        + "</div>"+
+                           
                         en.getFooter()
                );
     }
